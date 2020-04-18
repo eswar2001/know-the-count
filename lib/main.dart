@@ -1,7 +1,10 @@
+import 'package:Count/country.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'DetailedPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Covid-count',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -28,28 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<List<Country>> _getcountries() async {
-    var data = await http.get("https://api.covid19api.com/summary");
-    // print(data);
-
-    var jsonData = json.decode(data.body);
-// print(jsonData);
-    List<Country> countries = [];
- print(jsonData["Countries"]);
-    for (var u in jsonData["Countries"]) {
-      Country country = Country(
-          jsonData["Countries"][u]["Country"],
-          jsonData["Countries"][u]["NewConfirmed"],
-          jsonData["Countries"][u]["TotalConfirmed"],
-          jsonData["Countries"][u]["NewDeaths"],
-          jsonData["Countries"][u]["TotalDeaths"],
-          jsonData["Countries"][u]["NewRecovered"],
-          jsonData["Countries"][u]["TotalRecovered)"]);
-      countries.add(country);
-    }
-    return countries;
-  }
-
+  List<Country> countries = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +43,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FutureBuilder(
           future: _getcountries(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            // print(snapshot.data);
+            print(snapshot.data);
             if (snapshot.data == null) {
-              return Container(child: Center(child: Text("Loading...")));
+              return Container(child: Center(child: Text('Null')));
             } else {
+              for (var i in countries) print(i);
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -86,40 +70,31 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
 
-class DetailPage extends StatelessWidget {
-  final Country country;
+  Future<List<Country>> _getcountries() async {
+    var data = await http.get('https://api.covid19api.com/summary');
+    // print(data);
+    var jsonData = json.decode(data.body);
+// print(jsonData);
 
-  DetailPage(this.country);
+//  print(jsonData['Countries'][10]['Country']);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text(country.name),
-          Text(' Confirmed ' + country.Confirmed),
-          Text('TotalConfirmed ' + country.TotalConfirmed),
-          Text('Deaths ' + country.Deaths),
-          Text('TotalDeaths ' + country.TotalDeaths),
-          Text('Recovered ' + country.Recovered),
-          Text('TotalRecovered ' + country.TotalRecovered),
-        ],
-      ),
-    );
+    for (var u in jsonData['Countries']) {
+      // print(jsonData['Countries'][u]['Country']);
+      Country c = Country(
+          jsonData['Countries'][u]['Country'],
+          jsonData['Countries'][u]['NewConfirmed'] as int,
+          jsonData['Countries'][u]['TotalConfirmed'] as int,
+          jsonData['Countries'][u]['NewDeaths'] as int,
+          jsonData['Countries'][u]['TotalDeaths'] as int,
+          jsonData['Countries'][u]['NewRecovered'] as int,
+          jsonData['Countries'][u]['TotalRecovered)'] as int);
+      c.printdata();
+      countries.add(c);
+      // print(countries.length);
+    }
+
+    return countries;
   }
 }
 
-class Country {
-  final String name;
-  final String Confirmed;
-  final String TotalConfirmed;
-  final String Deaths;
-  final String TotalDeaths;
-  final String Recovered;
-  final String TotalRecovered;
-
-  Country(this.name, this.Confirmed, this.TotalConfirmed, this.Deaths,
-      this.TotalDeaths, this.Recovered, this.TotalRecovered);
-}
