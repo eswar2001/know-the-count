@@ -34,12 +34,42 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   @override
-  String s='';
+  String s = '';
+  bool isSearching = false;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-      ),
+          title: !isSearching
+              ? Text(widget.title)
+              : TextField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      hintText: "Search county here",
+                      hintStyle: TextStyle(color: Colors.white)),
+                ),
+          actions: [
+            !isSearching
+                ? IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      setState(() {
+                        this.isSearching = true;
+                      });
+                    },
+                  )
+                : IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: () {
+                      setState(() {
+                        this.isSearching = false;
+                      });
+                    },
+                  )
+          ]),
       body: Container(
         child: FutureBuilder(
           future: _getcountries(),
@@ -57,13 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Column(
                         children: [
                           Image.network(
-                            'https://www.countryflags.io/'+snapshot.data[index].countrycode+'/flat/64.png',
+                            'https://www.countryflags.io/' +
+                                snapshot.data[index].countrycode +
+                                '/flat/64.png',
                           ),
                           Text(snapshot.data[index].name),
                           Text(snapshot.data[index].totalConfirmed.toString()),
                           FlatButton(
                               onPressed: () {
-                                Navigator.pushAndRemoveUntil(
+                                Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
