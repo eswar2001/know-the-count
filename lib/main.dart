@@ -98,7 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:  Colors.grey[800],
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.black87,
         elevation: 0.8,
         title: !isSearching
             ? Text('All Countries')
@@ -161,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
                                 elevation: 5.0,
-                                shadowColor: Colors.lightBlue[900],
+                                shadowColor: Colors.pink[400],
                                 color: Colors.black,
                                 child: Column(
                                   children: [
