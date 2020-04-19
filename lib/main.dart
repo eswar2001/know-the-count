@@ -40,7 +40,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.black87,
+      backgroundColor: Colors.black87,
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +50,7 @@ class SplashScreenState extends State<SplashScreen> {
             Text(
               'Made With',
               style: TextStyle(
-                color: Colors.white70 ,
+                  color: Colors.white70,
                   fontSize: 20.0,
                   wordSpacing: 2.0,
                   fontWeight: FontWeight.w500),
@@ -61,7 +61,7 @@ class SplashScreenState extends State<SplashScreen> {
             Text(
               'Flutter',
               style: TextStyle(
-                color: Colors.white70 ,
+                  color: Colors.white70,
                   fontSize: 20.0,
                   wordSpacing: 2.0,
                   fontWeight: FontWeight.w500),
@@ -154,11 +154,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: AnimatedContainer(
-                                color: Colors.blue,
-                                duration: Duration(seconds: 2),
-                                curve: Curves.fastOutSlowIn,
+                              padding: const EdgeInsets.all(3.0),
+                              child: Card(
+                                semanticContainer: true,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                elevation: 5.0,
+                                shadowColor: Colors.lightBlue[900],
+                                color: Colors.black,
                                 child: Column(
                                   children: [
                                     Image.network(
@@ -166,10 +170,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                           snapshot.data[index].countrycode +
                                           '/flat/64.png',
                                     ),
-                                    Text(snapshot.data[index].name),
-                                    Text(snapshot.data[index].totalConfirmed
-                                        .toString()),
+                                    Text(snapshot.data[index].name + '\n'),
+                                    Text('Total confirmed cases:' +
+                                        snapshot.data[index].totalConfirmed
+                                            .toString()),
                                     FlatButton(
+                                        color: Colors.blueGrey,
+                                        splashColor: Colors.pink[400],
                                         onPressed: () {
                                           Navigator.push(
                                               context,
