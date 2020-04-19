@@ -32,10 +32,7 @@ class _DetailPageState extends State<DetailPage> {
           Text('TotalRecovered:' + widget.country.totalRecovered.toString()),
           FlatButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>MyHomePage(title: 'countries') ));
+              Navigator.pop(context);
             },
             child: Text('Back'),
           ),
