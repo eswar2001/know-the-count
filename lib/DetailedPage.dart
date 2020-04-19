@@ -2,7 +2,6 @@ import 'package:Count/main.dart';
 import 'package:flutter/material.dart';
 
 import 'country.dart';
-import 'countryMap.dart';
 
 class DetailPage extends StatefulWidget {
   final Country country;
