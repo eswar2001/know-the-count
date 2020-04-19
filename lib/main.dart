@@ -10,6 +10,7 @@ import 'DetailedPage.dart';
 
 void main() => runApp(MyApp());
 
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -83,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FutureBuilder(
           future: _getcountries(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            print(snapshot.data);
+            // print(snapshot.data);
             if (snapshot.data == null) {
               return Container(child: Center(child: Text('Null')));
             } else {
@@ -94,28 +95,35 @@ class _MyHomePageState extends State<MyHomePage> {
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Card(
-                                child: Column(
-                                  children: [
-                                    Image.network(
-                                      'https://www.countryflags.io/' +
-                                          snapshot.data[index].countrycode +
-                                          '/flat/64.png',
-                                    ),
-                                    Text(snapshot.data[index].name),
-                                    Text(snapshot.data[index].totalConfirmed
-                                        .toString()),
-                                    FlatButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetailPage(snapshot
-                                                          .data[index])));
-                                        },
-                                        child: Text('More Data'))
-                                  ],
+                              child:AnimatedContainer(
+                               
+        color:Colors.blue,
+       
+        duration: Duration(seconds: 2),
+        curve: Curves.fastOutSlowIn,
+                                child: Card(
+                                  child: Column(
+                                    children: [
+                                      Image.network(
+                                        'https://www.countryflags.io/' +
+                                            snapshot.data[index].countrycode +
+                                            '/flat/64.png',
+                                      ),
+                                      Text(snapshot.data[index].name),
+                                      Text(snapshot.data[index].totalConfirmed
+                                          .toString()),
+                                      FlatButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailPage(snapshot
+                                                            .data[index])));
+                                          },
+                                          child: Text('More Data'))
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -196,8 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
           jsonData['Countries'][u]['CountryCode']);
       countries.add(c);
     }
-    print("hii");
+    // print("hii");
     return countries;
   }
 }
-
