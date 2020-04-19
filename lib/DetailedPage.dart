@@ -1,28 +1,43 @@
+import 'package:Count/main.dart';
 import 'package:flutter/material.dart';
 
 import 'country.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   final Country country;
 
   DetailPage(this.country);
 
   @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
       child: Column(
         children: [
-          Text(country.name),
-          Text(' Confirmed  $country.Confirmed'),
-          Text('TotalConfirmed  $country.TotalConfirmed'),
-          Text('Deaths   $country.Deaths'),
-          Text('TotalDeaths  $country.TotalDeaths'),
-          Text('Recovered  $country.Recovered'),
-          Text('TotalRecovered  $country.TotalRecovered'),
+          Image.network(
+            'https://www.countryflags.io/' +
+                widget.country.countrycode +
+                '/flat/64.png',
+          ),
+          Text(widget.country.name + '\n'),
+          Text('Confirmed:' + widget.country.confirmed.toString()),
+          Text('TotalConfirmed:' + widget.country.totalConfirmed.toString()),
+          Text('Deaths:' + widget.country.deaths.toString()),
+          Text('TotalDeaths:' + widget.country.totalDeaths.toString()),
+          Text('Recovered:' + widget.country.recovered.toString()),
+          Text('TotalRecovered:' + widget.country.totalRecovered.toString()),
+          FlatButton(
+            onPressed: () {
+             
+            },
+            child: Text('Back'),
+          )
         ],
       ),
     );
   }
 }
-
-

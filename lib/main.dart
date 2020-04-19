@@ -34,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   @override
+  String s='';
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -50,17 +51,28 @@ class _MyHomePageState extends State<MyHomePage> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text(snapshot.data[index].name),
-                    subtitle:
-                        Text(snapshot.data[index].totalConfirmed.toString()),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailPage(snapshot.data[index])));
-                    },
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: Column(
+                        children: [
+                          Image.network(
+                            'https://www.countryflags.io/'+snapshot.data[index].countrycode+'/flat/64.png',
+                          ),
+                          Text(snapshot.data[index].name),
+                          Text(snapshot.data[index].totalConfirmed.toString()),
+                          FlatButton(
+                              onPressed: () {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailPage(snapshot.data[index])));
+                              },
+                              child: Text('More Data'))
+                        ],
+                      ),
+                    ),
                   );
                 },
               );
@@ -86,7 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
           jsonData['Countries'][u]['NewDeaths'],
           jsonData['Countries'][u]['TotalDeaths'],
           jsonData['Countries'][u]['NewRecovered'],
-          jsonData['Countries'][u]['TotalRecovered)']);
+          jsonData['Countries'][u]['TotalRecovered)'],
+          jsonData['Countries'][u]['CountryCode']);
       countries.add(c);
     }
     print("hii");
