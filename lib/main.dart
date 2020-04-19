@@ -1,15 +1,77 @@
-import 'dart:collection';
-
 import 'package:Count/country.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'DetailedPage.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: SplashScreen(),
+  ));
+}
 
+class SplashScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return SplashScreenState();
+  }
+}
+
+class SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    loadData();
+  }
+
+  Future<Timer> loadData() async {
+    return new Timer(Duration(seconds: 2), onDoneLoading);
+  }
+
+  onDoneLoading() async {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+       backgroundColor: Colors.black87,
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(width: 7),
+            Text(
+              'Made With',
+              style: TextStyle(
+                color: Colors.white70 ,
+                  fontSize: 20.0,
+                  wordSpacing: 2.0,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(width: 7),
+            Icon(Icons.favorite, color: Colors.pinkAccent),
+            SizedBox(width: 7),
+            Text(
+              'Flutter',
+              style: TextStyle(
+                color: Colors.white70 ,
+                  fontSize: 20.0,
+                  wordSpacing: 2.0,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -17,9 +79,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Covid-count',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark(),
       home: MyHomePage(title: 'countries'),
     );
   }
@@ -86,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             // print(snapshot.data);
             if (snapshot.data == null) {
-              return Container(child: Center(child: Text('Null')));
+              return Container(child: Center(child: Text('Hang on tight...')));
             } else {
               return filteredCountries.length > 0
                   ? !isSearching
@@ -95,35 +155,31 @@ class _MyHomePageState extends State<MyHomePage> {
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child:AnimatedContainer(
-                               
-        color:Colors.blue,
-       
-        duration: Duration(seconds: 2),
-        curve: Curves.fastOutSlowIn,
-                                child: Card(
-                                  child: Column(
-                                    children: [
-                                      Image.network(
-                                        'https://www.countryflags.io/' +
-                                            snapshot.data[index].countrycode +
-                                            '/flat/64.png',
-                                      ),
-                                      Text(snapshot.data[index].name),
-                                      Text(snapshot.data[index].totalConfirmed
-                                          .toString()),
-                                      FlatButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DetailPage(snapshot
-                                                            .data[index])));
-                                          },
-                                          child: Text('More Data'))
-                                    ],
-                                  ),
+                              child: AnimatedContainer(
+                                color: Colors.blue,
+                                duration: Duration(seconds: 2),
+                                curve: Curves.fastOutSlowIn,
+                                child: Column(
+                                  children: [
+                                    Image.network(
+                                      'https://www.countryflags.io/' +
+                                          snapshot.data[index].countrycode +
+                                          '/flat/64.png',
+                                    ),
+                                    Text(snapshot.data[index].name),
+                                    Text(snapshot.data[index].totalConfirmed
+                                        .toString()),
+                                    FlatButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailPage(snapshot
+                                                          .data[index])));
+                                        },
+                                        child: Text('More Data'))
+                                  ],
                                 ),
                               ),
                             );

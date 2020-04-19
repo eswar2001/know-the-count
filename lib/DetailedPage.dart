@@ -16,27 +16,33 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(
-        children: [
-          Image.network(
-            'https://www.countryflags.io/' +
-                widget.country.countrycode +
-                '/flat/64.png',
-          ),
-          Text(widget.country.name + '\n'),
-          Text('Confirmed:' + widget.country.confirmed.toString()),
-          Text('TotalConfirmed:' + widget.country.totalConfirmed.toString()),
-          Text('Deaths:' + widget.country.deaths.toString()),
-          Text('TotalDeaths:' + widget.country.totalDeaths.toString()),
-          Text('Recovered:' + widget.country.recovered.toString()),
-          Text('TotalRecovered:' + widget.country.totalRecovered.toString()),
-          FlatButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Back'),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network(
+                'https://www.countryflags.io/' +
+                    widget.country.countrycode +
+                    '/flat/64.png',
+              ),
+            ),
+            Text(widget.country.name + '\n'),
+            Text('Confirmed:' + widget.country.confirmed.toString()),
+            Text('TotalConfirmed:' + widget.country.totalConfirmed.toString()),
+            Text('Deaths:' + widget.country.deaths.toString()),
+            Text('TotalDeaths:' + widget.country.totalDeaths.toString()),
+            Text('Recovered:' + widget.country.recovered.toString()),
+            Text('TotalRecovered:' + widget.country.totalRecovered.toString()),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Back'),
+            ),
+          ],
+        ),
       ),
     );
   }
