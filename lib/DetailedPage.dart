@@ -32,7 +32,7 @@ class _DetailPageState extends State<DetailPage> {
           Text('TotalRecovered:' + widget.country.totalRecovered.toString()),
           FlatButton(
             onPressed: () {
-             
+             Mat
             },
             child: Text('Back'),
           )
