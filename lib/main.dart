@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Country> countries = [];
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,13 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
             if (snapshot.data == null) {
               return Container(child: Center(child: Text('Null')));
             } else {
-              for (var i in countries) print(i);
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     title: Text(snapshot.data[index].name),
-                    subtitle: Text(snapshot.data[index].TotalConfirmed),
+                    subtitle:
+                        Text(snapshot.data[index].totalConfirmed.toString()),
                     onTap: () {
                       Navigator.push(
                           context,
@@ -72,29 +72,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<List<Country>> _getcountries() async {
+    List<Country> countries = [];
     var data = await http.get('https://api.covid19api.com/summary');
-    // print(data);
     var jsonData = json.decode(data.body);
-// print(jsonData);
+    // print(jsonData);
+    var u;
 
-//  print(jsonData['Countries'][10]['Country']);
-
-    for (var u in jsonData['Countries']) {
-      // print(jsonData['Countries'][u]['Country']);
+    for (u = 0; u < 247; u++) {
       Country c = Country(
           jsonData['Countries'][u]['Country'],
-          jsonData['Countries'][u]['NewConfirmed'] as int,
-          jsonData['Countries'][u]['TotalConfirmed'] as int,
-          jsonData['Countries'][u]['NewDeaths'] as int,
-          jsonData['Countries'][u]['TotalDeaths'] as int,
-          jsonData['Countries'][u]['NewRecovered'] as int,
-          jsonData['Countries'][u]['TotalRecovered)'] as int);
-      c.printdata();
+          jsonData['Countries'][u]['NewConfirmed'],
+          jsonData['Countries'][u]['TotalConfirmed'],
+          jsonData['Countries'][u]['NewDeaths'],
+          jsonData['Countries'][u]['TotalDeaths'],
+          jsonData['Countries'][u]['NewRecovered'],
+          jsonData['Countries'][u]['TotalRecovered)']);
       countries.add(c);
-      // print(countries.length);
     }
-
+    print("hii");
     return countries;
   }
 }
-

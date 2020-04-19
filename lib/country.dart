@@ -1,19 +1,19 @@
 class Country {
-   String name;
-   int Confirmed;
-   int TotalConfirmed;
-   int Deaths;
-   int TotalDeaths;
-   int Recovered;
-   int TotalRecovered;
+  String name;
+  int confirmed;
+  int totalConfirmed;
+  int deaths;
+  int totalDeaths;
+  int recovered;
+  int totalRecovered;
 
-  Country(this.name, this.Confirmed, this.TotalConfirmed, this.Deaths,
-      this.TotalDeaths, this.Recovered, this.TotalRecovered);
+  Country(this.name, this.confirmed, this.totalConfirmed, this.deaths,
+      this.totalDeaths, this.recovered, this.totalRecovered);
   void printdata() {
     print(name);
-    print(Confirmed);
-    print(TotalConfirmed);
-    print(TotalDeaths);
-    print(TotalRecovered);
+    print(confirmed);
+    print(totalConfirmed);
+    print(totalDeaths);
+    print(totalRecovered);
   }
 }
