@@ -2,6 +2,7 @@ import 'package:Count/main.dart';
 import 'package:flutter/material.dart';
 
 import 'country.dart';
+import 'countryMap.dart';
 
 class DetailPage extends StatefulWidget {
   final Country country;
@@ -32,10 +33,13 @@ class _DetailPageState extends State<DetailPage> {
           Text('TotalRecovered:' + widget.country.totalRecovered.toString()),
           FlatButton(
             onPressed: () {
-             Mat
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>MyHomePage(title: 'countries') ));
             },
             child: Text('Back'),
-          )
+          ),
         ],
       ),
     );
