@@ -255,19 +255,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<List<Country>> _getcountries() async {
     var data = await http.get('https://api.covid19api.com/summary');
     var jsonData = json.decode(data.body);
-    // print(jsonData);
-    var u;
+   
 
-    for (u = 0; u < 247; u++) {
+    for (var u in jsonData['Countries']) {
       Country c = Country(
-          jsonData['Countries'][u]['Country'],
-          jsonData['Countries'][u]['NewConfirmed'],
-          jsonData['Countries'][u]['TotalConfirmed'],
-          jsonData['Countries'][u]['NewDeaths'],
-          jsonData['Countries'][u]['TotalDeaths'],
-          jsonData['Countries'][u]['NewRecovered'],
-          jsonData['Countries'][u]['TotalRecovered)'],
-          jsonData['Countries'][u]['CountryCode']);
+          u['Country'],
+          u['NewConfirmed'],
+          u['TotalConfirmed'],
+          u['NewDeaths'],
+          u['TotalDeaths'],
+          u['NewRecovered'],
+          u['TotalRecovered)'],
+          u['CountryCode']);
+          print( u);
       countries.add(c);
     }
     // print("hii");
