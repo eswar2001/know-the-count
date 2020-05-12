@@ -3,6 +3,7 @@ import 'package:Count/country.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 import 'dart:convert';
 import 'DetailedPage.dart';
 
@@ -39,37 +40,54 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black87,
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(width: 7),
-            Text(
-              'Made With',
-              style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 20.0,
-                  wordSpacing: 2.0,
-                  fontWeight: FontWeight.w500),
+    return ListView(children: [
+      Column(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Lottie.asset('assets/18168-stay-safe-stay-home.json',
+                  fit: BoxFit.contain,
+                  animate: true,
+                  alignment: Alignment.center),
             ),
-            SizedBox(width: 7),
-            Icon(Icons.favorite, color: Colors.pinkAccent),
-            SizedBox(width: 7),
-            Text(
-              'Flutter',
-              style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 20.0,
-                  wordSpacing: 2.0,
-                  fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 200.0,
+          ),
+          Center(
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(width: 7),
+                  Text(
+                    'Made With',
+                    style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 20.0,
+                        wordSpacing: 2.0,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(width: 7),
+                  Icon(Icons.favorite, color: Colors.pinkAccent),
+                  SizedBox(width: 7),
+                  Text(
+                    'Flutter',
+                    style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 20.0,
+                        wordSpacing: 2.0,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
+    ]);
   }
 }
 
@@ -98,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Colors.grey[800],
+      backgroundColor: Colors.grey[800],
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.black87,
@@ -149,7 +167,16 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             // print(snapshot.data);
             if (snapshot.data == null) {
-              return Container(child: Center(child: Text('Hang on tight...')));
+              return Container(
+                  child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Lottie.asset('assets/18168-stay-safe-stay-home.json',
+                      fit: BoxFit.contain,
+                      animate: true,
+                      alignment: Alignment.center),
+                ),
+              ));
             } else {
               return filteredCountries.length > 0
                   ? !isSearching
@@ -222,7 +249,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           })
                   : Center(
-                      child: CircularProgressIndicator(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Lottie.asset(
+                            'assets/18168-stay-safe-stay-home.json',
+                            fit: BoxFit.contain,
+                            animate: true,
+                            alignment: Alignment.center),
+                      ),
                     );
             }
           },
@@ -255,7 +289,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<List<Country>> _getcountries() async {
     var data = await http.get('https://api.covid19api.com/summary');
     var jsonData = json.decode(data.body);
-   
 
     for (var u in jsonData['Countries']) {
       Country c = Country(
@@ -267,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
           u['NewRecovered'],
           u['TotalRecovered)'],
           u['CountryCode']);
-          print( u);
+      print(u);
       countries.add(c);
     }
     // print("hii");
